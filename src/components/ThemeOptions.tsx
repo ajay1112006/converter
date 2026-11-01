@@ -42,17 +42,17 @@ export function ThemeOptions({
   canConvert,
 }: ThemeOptionsProps) {
   return (
-    <div className="bg-white rounded-2xl border border-slate-200 p-5 shadow-sm space-y-6">
+    <div className="glass-panel rounded-3xl p-6 shadow-2xl space-y-6 text-slate-200">
       {/* 1. Theme Color Selection */}
       <div>
         <div className="flex items-center gap-2 mb-3">
-          <div className="p-1.5 rounded-lg bg-indigo-50 text-indigo-600">
+          <div className="p-2 rounded-xl bg-indigo-500/20 text-indigo-400 border border-indigo-500/30">
             <Palette className="w-4 h-4" />
           </div>
-          <h4 className="font-bold text-slate-900 text-sm">Presentation Theme & Accent</h4>
+          <h4 className="font-bold text-white text-sm">Presentation Theme & Accent</h4>
         </div>
 
-        <div className="grid grid-cols-2 sm:grid-cols-5 gap-2.5">
+        <div className="grid grid-cols-2 sm:grid-cols-5 gap-3">
           {THEME_CONFIGS.map((th) => {
             const isSelected = selectedThemeId === th.id;
             return (
@@ -60,20 +60,20 @@ export function ThemeOptions({
                 key={th.id}
                 type="button"
                 onClick={() => onSelectTheme(th.id)}
-                className={`flex items-center gap-2.5 p-2.5 rounded-xl border text-left transition-all ${
+                className={`flex items-center gap-2.5 p-3 rounded-2xl border text-left transition-all cursor-pointer ${
                   isSelected
-                    ? 'border-indigo-600 bg-indigo-50/50 ring-2 ring-indigo-500/20'
-                    : 'border-slate-200 hover:border-slate-300 bg-white'
+                    ? 'border-indigo-400 bg-indigo-600/30 ring-2 ring-indigo-400/40 shadow-lg shadow-indigo-600/20'
+                    : 'border-white/10 hover:border-white/20 bg-white/5 hover:bg-white/10'
                 }`}
               >
                 <div
-                  className="w-5 h-5 rounded-full shrink-0 flex items-center justify-center text-white"
+                  className="w-5 h-5 rounded-full shrink-0 flex items-center justify-center text-white shadow-sm"
                   style={{ backgroundColor: th.primary }}
                 >
                   {isSelected && <Check className="w-3 h-3" />}
                 </div>
                 <div className="min-w-0">
-                  <span className="block text-xs font-semibold text-slate-800 truncate">{th.name}</span>
+                  <span className="block text-xs font-semibold text-white truncate">{th.name}</span>
                 </div>
               </button>
             );
@@ -85,17 +85,17 @@ export function ThemeOptions({
       <div>
         <div className="flex items-center justify-between mb-2">
           <div className="flex items-center gap-2">
-            <div className="p-1.5 rounded-lg bg-indigo-50 text-indigo-600">
+            <div className="p-2 rounded-xl bg-indigo-500/20 text-indigo-400 border border-indigo-500/30">
               <Sliders className="w-4 h-4" />
             </div>
-            <h4 className="font-bold text-slate-900 text-sm">Table Pagination (Max Rows Per Slide)</h4>
+            <h4 className="font-bold text-white text-sm">Table Pagination (Max Rows Per Slide)</h4>
           </div>
-          <span className="text-xs font-semibold text-indigo-600 bg-indigo-50 px-2 py-0.5 rounded-md border border-indigo-200">
+          <span className="text-xs font-semibold text-indigo-300 bg-indigo-500/20 px-2.5 py-1 rounded-xl border border-indigo-400/30">
             {maxRowsPerSlide} rows / slide
           </span>
         </div>
 
-        <p className="text-xs text-slate-500 mb-3">
+        <p className="text-xs text-slate-300 mb-3.5">
           Prevents unreadable shrunk text on slides. Headers are cleanly repeated on every continuation slide.
         </p>
 
@@ -105,10 +105,10 @@ export function ThemeOptions({
               key={count}
               type="button"
               onClick={() => onChangeMaxRows(count)}
-              className={`px-3 py-1.5 rounded-xl text-xs font-medium border transition-colors ${
+              className={`px-3.5 py-1.5 rounded-xl text-xs font-semibold border transition-all cursor-pointer ${
                 maxRowsPerSlide === count
-                  ? 'bg-indigo-600 text-white border-indigo-600 shadow-2xs'
-                  : 'bg-slate-50 text-slate-700 border-slate-200 hover:bg-slate-100'
+                  ? 'bg-indigo-600 text-white border-indigo-400 shadow-md shadow-indigo-600/40 scale-105'
+                  : 'bg-white/5 text-slate-300 border-white/10 hover:bg-white/10 hover:text-white'
               }`}
             >
               {count} Rows
@@ -118,35 +118,35 @@ export function ThemeOptions({
       </div>
 
       {/* 3. Toggles */}
-      <div className="pt-2 border-t border-slate-100 flex flex-wrap items-center gap-6">
-        <label className="flex items-center gap-2 text-xs font-medium text-slate-700 cursor-pointer">
+      <div className="pt-4 border-t border-white/10 flex flex-wrap items-center gap-6">
+        <label className="flex items-center gap-2.5 text-xs font-medium text-slate-300 hover:text-white cursor-pointer select-none">
           <input
             type="checkbox"
             checked={includeTitleSlide}
             onChange={(e) => onToggleTitleSlide(e.target.checked)}
-            className="w-4 h-4 rounded text-indigo-600 focus:ring-indigo-500 border-slate-300"
+            className="w-4 h-4 rounded text-indigo-600 focus:ring-indigo-500 border-white/20 bg-slate-900"
           />
           <span>Include Title Slide (Workbook Name & Date)</span>
         </label>
 
-        <label className="flex items-center gap-2 text-xs font-medium text-slate-700 cursor-pointer">
+        <label className="flex items-center gap-2.5 text-xs font-medium text-slate-300 hover:text-white cursor-pointer select-none">
           <input
             type="checkbox"
             checked={includeSlideNumbers}
             onChange={(e) => onToggleSlideNumbers(e.target.checked)}
-            className="w-4 h-4 rounded text-indigo-600 focus:ring-indigo-500 border-slate-300"
+            className="w-4 h-4 rounded text-indigo-600 focus:ring-indigo-500 border-white/20 bg-slate-900"
           />
           <span>Include Slide Footers & Attribution</span>
         </label>
       </div>
 
       {/* 4. Action Button */}
-      <div className="pt-4 border-t border-slate-100">
+      <div className="pt-4 border-t border-white/10">
         <button
           type="button"
           onClick={onConvert}
           disabled={!canConvert || isConverting}
-          className="w-full py-3.5 px-6 rounded-2xl bg-indigo-600 hover:bg-indigo-700 disabled:bg-slate-200 disabled:text-slate-400 disabled:cursor-not-allowed text-white font-bold text-sm sm:text-base flex items-center justify-center gap-2 shadow-lg shadow-indigo-600/20 hover:shadow-indigo-600/30 transition-all duration-200"
+          className="w-full py-4 px-6 rounded-2xl bg-gradient-to-r from-indigo-600 via-indigo-500 to-cyan-600 hover:from-indigo-500 hover:to-cyan-500 disabled:from-slate-800 disabled:to-slate-800 disabled:text-slate-500 disabled:cursor-not-allowed text-white font-bold text-sm sm:text-base flex items-center justify-center gap-2.5 shadow-xl shadow-indigo-600/30 hover:shadow-indigo-500/50 hover:scale-[1.01] active:scale-[0.99] transition-all duration-200 cursor-pointer"
         >
           {isConverting ? (
             <>

@@ -21,14 +21,14 @@ export function ProgressModal({ isOpen, step, statusText }: ProgressModalProps) 
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm animate-in fade-in duration-200">
-      <div className="bg-white rounded-3xl max-w-md w-full p-6 shadow-2xl border border-slate-200 text-center">
-        <div className="w-14 h-14 rounded-2xl bg-indigo-50 text-indigo-600 flex items-center justify-center mx-auto mb-4 shadow-inner">
-          <Presentation className="w-7 h-7 animate-pulse" />
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/75 backdrop-blur-md animate-in fade-in duration-200">
+      <div className="glass-panel-glow rounded-3xl max-w-md w-full p-6 sm:p-8 shadow-2xl text-center text-slate-200">
+        <div className="w-16 h-16 rounded-2xl bg-indigo-500/20 text-indigo-400 border border-indigo-500/30 flex items-center justify-center mx-auto mb-4 shadow-xl">
+          <Presentation className="w-8 h-8 animate-pulse text-indigo-400" />
         </div>
 
-        <h3 className="text-lg font-bold text-slate-900 mb-1">Converting Workbook</h3>
-        <p className="text-xs text-slate-500 mb-6">{statusText || 'Processing workbook data...'}</p>
+        <h3 className="text-xl font-bold text-white mb-1">Converting Workbook</h3>
+        <p className="text-xs text-slate-300 mb-6">{statusText || 'Processing workbook data...'}</p>
 
         {/* Progress steps */}
         <div className="space-y-3 text-left mb-6">
@@ -39,20 +39,20 @@ export function ProgressModal({ isOpen, step, statusText }: ProgressModalProps) 
             return (
               <div
                 key={s.id}
-                className={`flex items-center gap-3 p-2.5 rounded-xl border transition-all text-xs ${
+                className={`flex items-center gap-3 p-3 rounded-2xl border transition-all text-xs ${
                   isDone
-                    ? 'border-emerald-200 bg-emerald-50/50 text-emerald-800'
+                    ? 'border-emerald-500/30 bg-emerald-500/15 text-emerald-300'
                     : isCurrent
-                    ? 'border-indigo-200 bg-indigo-50/60 text-indigo-900 font-semibold'
-                    : 'border-slate-100 text-slate-400 bg-slate-50/30'
+                    ? 'border-indigo-400/50 bg-indigo-600/25 text-white font-semibold shadow-md shadow-indigo-600/20'
+                    : 'border-white/10 text-slate-400 bg-white/5'
                 }`}
               >
                 {isDone ? (
-                  <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
+                  <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" />
                 ) : isCurrent ? (
-                  <Loader2 className="w-4 h-4 text-indigo-600 animate-spin shrink-0" />
+                  <Loader2 className="w-4 h-4 text-indigo-400 animate-spin shrink-0" />
                 ) : (
-                  <div className="w-4 h-4 rounded-full border border-slate-300 shrink-0 flex items-center justify-center text-[10px] text-slate-400">
+                  <div className="w-4 h-4 rounded-full border border-white/20 shrink-0 flex items-center justify-center text-[10px] text-slate-400">
                     {s.id}
                   </div>
                 )}
@@ -62,9 +62,9 @@ export function ProgressModal({ isOpen, step, statusText }: ProgressModalProps) 
           })}
         </div>
 
-        <div className="w-full bg-slate-100 rounded-full h-2 overflow-hidden">
+        <div className="w-full bg-white/10 rounded-full h-2.5 overflow-hidden">
           <div
-            className="bg-indigo-600 h-2 rounded-full transition-all duration-300"
+            className="bg-gradient-to-r from-indigo-500 via-indigo-400 to-cyan-400 h-2.5 rounded-full transition-all duration-300 shadow-sm shadow-indigo-400/50"
             style={{ width: `${(Math.min(step, 5) / 5) * 100}%` }}
           />
         </div>

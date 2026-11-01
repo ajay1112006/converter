@@ -9,6 +9,7 @@ import { SlideStoryboard } from '../components/SlideStoryboard';
 import { ThemeOptions, THEME_CONFIGS } from '../components/ThemeOptions';
 import { ProgressModal } from '../components/ProgressModal';
 import { ErrorBanner } from '../components/ErrorBanner';
+import { Interactive3DBackground } from '../components/Interactive3DBackground';
 import { inspectFileClientSide, buildStoryboardSlides } from '../lib/client-parser';
 import { generateClientSidePptx } from '../lib/client-pptx';
 import { ClientInspectionResult, ClientStoryboardSlide } from '../types';
@@ -224,22 +225,25 @@ export default function Home() {
   const activeSheetObj = inspection?.sheets.find((s) => s.name === activePreviewSheet);
 
   return (
-    <div className="min-h-screen bg-slate-50/50 flex flex-col font-sans">
+    <div className="min-h-screen flex flex-col font-sans relative text-slate-100 selection:bg-indigo-500 selection:text-white">
+      {/* 3D Interactive WebGL Background */}
+      <Interactive3DBackground />
+
       <Header />
 
-      <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">
+      <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-8 relative z-10">
         {/* Hero Banner */}
-        <div className="text-center max-w-3xl mx-auto space-y-3">
-          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-indigo-50 border border-indigo-200 text-indigo-700 text-xs font-semibold">
-            <Sparkles className="w-3.5 h-3.5 text-indigo-600" />
+        <div className="text-center max-w-3xl mx-auto space-y-4 pt-2 sm:pt-4">
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-indigo-500/15 border border-indigo-400/30 text-indigo-300 text-xs font-semibold backdrop-blur-xl shadow-lg shadow-indigo-500/10">
+            <Sparkles className="w-3.5 h-3.5 text-indigo-400 animate-pulse" />
             <span>Exact Data Preservation • Native PowerPoint Charts & Tables</span>
           </div>
-          <h1 className="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight">
+          <h1 className="text-3xl sm:text-5xl font-black text-transparent bg-clip-text bg-gradient-to-b from-white via-slate-100 to-indigo-200 tracking-tight leading-tight drop-shadow-md">
             Convert Excel Workbooks into Executive PowerPoint Presentations
           </h1>
-          <p className="text-sm sm:text-base text-slate-600 max-w-2xl mx-auto">
-            100% data fidelity: cell values, currencies, percentages, and formulas are reproduced exactly.
-            Large tables are cleanly split across readable slides with repeating headers.
+          <p className="text-sm sm:text-base text-slate-300 max-w-2xl mx-auto leading-relaxed">
+            100% numerical fidelity: cell values, currencies, percentages, and formulas are reproduced exactly.
+            Hover, click, and interact with the 3D data space while configuring your presentation.
           </p>
         </div>
 
@@ -248,20 +252,20 @@ export default function Home() {
 
         {/* Persistent Ready Download Card */}
         {readyDownload && (
-          <div className="bg-emerald-50 border-2 border-emerald-400/80 rounded-2xl p-5 shadow-md flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 animate-in fade-in">
-            <div className="flex items-center gap-3.5">
-              <div className="w-12 h-12 rounded-xl bg-emerald-600 text-white flex items-center justify-center shrink-0 shadow-sm">
-                <CheckCircle2 className="w-7 h-7" />
+          <div className="glass-panel-glow border-2 border-emerald-400/50 rounded-3xl p-6 shadow-2xl flex flex-col sm:flex-row items-start sm:items-center justify-between gap-5 animate-in fade-in">
+            <div className="flex items-center gap-4">
+              <div className="w-14 h-14 rounded-2xl bg-emerald-500/20 text-emerald-400 border border-emerald-400/30 flex items-center justify-center shrink-0 shadow-lg">
+                <CheckCircle2 className="w-8 h-8" />
               </div>
               <div>
-                <div className="flex items-center gap-2">
-                  <h3 className="font-bold text-emerald-950 text-base">Your Presentation is Ready!</h3>
-                  <span className="text-[11px] font-bold px-2 py-0.5 rounded-full bg-emerald-200/60 text-emerald-800">
+                <div className="flex items-center gap-2.5">
+                  <h3 className="font-bold text-white text-lg">Your Presentation is Ready!</h3>
+                  <span className="text-[11px] font-bold px-2.5 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-400/30">
                     {formatFileSize(readyDownload.size)}
                   </span>
                 </div>
-                <p className="text-xs text-emerald-700 mt-0.5 font-medium">
-                  File: <code className="bg-emerald-100/70 px-1 py-0.5 rounded font-mono text-emerald-900">{readyDownload.filename}</code>
+                <p className="text-xs text-slate-300 mt-1 font-medium">
+                  File: <code className="bg-white/10 px-1.5 py-0.5 rounded font-mono text-emerald-300 border border-white/10">{readyDownload.filename}</code>
                 </p>
               </div>
             </div>
@@ -270,7 +274,7 @@ export default function Home() {
               <a
                 href={readyDownload.url}
                 download={readyDownload.filename}
-                className="w-full sm:w-auto px-5 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-xs sm:text-sm font-bold flex items-center justify-center gap-2 shadow-md shadow-emerald-700/20 transition-all hover:scale-[1.02] cursor-pointer"
+                className="w-full sm:w-auto px-6 py-3 bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white rounded-2xl text-xs sm:text-sm font-bold flex items-center justify-center gap-2 shadow-xl shadow-emerald-600/30 hover:scale-[1.02] active:scale-[0.98] transition-all cursor-pointer"
               >
                 <Download className="w-4 h-4" />
                 <span>Save .PPTX File</span>
@@ -289,7 +293,7 @@ export default function Home() {
 
         {/* Inspection Details & Configuration */}
         {inspection && (
-          <div className="space-y-8 animate-in fade-in duration-200">
+          <div className="space-y-8 animate-in fade-in duration-300">
             {/* Sheet Selector */}
             <SheetSelector
               sheets={inspection.sheets}
@@ -339,11 +343,11 @@ export default function Home() {
       />
 
       {/* Footer */}
-      <footer className="border-t border-slate-200 py-6 bg-white text-center text-xs text-slate-500 mt-12">
-        <div className="max-w-7xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-2">
-          <span>Excel to PowerPoint Presentation Converter — Production Standard</span>
-          <span className="text-slate-400">
-            In-Memory Processing • No Server Persistence • Client-Side Previews
+      <footer className="border-t border-white/10 py-8 bg-slate-950/80 backdrop-blur-xl text-center text-xs text-slate-400 mt-16 relative z-10">
+        <div className="max-w-7xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-3">
+          <span className="font-medium text-slate-300">Excel to PowerPoint Presentation Converter — Production Standard</span>
+          <span className="text-slate-500">
+            In-Memory Processing • No Server Persistence • Real-Time 3D Interactive Canvas
           </span>
         </div>
       </footer>
